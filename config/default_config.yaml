@@ -1,0 +1,57 @@
+# Main configuration (manuscript Sec. 3.5, 4.1, 4.3).
+architecture:            # Fig. 4 / Table X (fixed in src/models.py)
+  conv_filters: [64, 128, 256]
+  conv_kernels: [7, 5, 3]
+  lstm_units: [128, 64, 32]
+  dense_units: 128
+  dropout_backbone: 0.2
+  dropout_head: 0.5
+  expansion_units: 64    # units of each of the M new dense layers
+
+data:
+  split_fractions: [0.7, 0.1, 0.2]   # run-level split before windowing
+  normalization: train_only_zscore
+  window_length_T: null              # set per domain
+  stride: null                       # set per domain
+
+hafse:
+  K: 5
+  N_space: [1, 2, 3, 4, 5]           # N=1: LSTM-3 ... N=5: + Conv1D-2
+  M_space: [1, 2, 3, 4, 5]
+  M0: 0                              # baseline configuration while N is selected
+  scheme: sequential                 # sequential | reversed | joint | alternating
+  search_method: de                  # de | exhaustive (equivalent for K = 5)
+  selection_criterion: val_accuracy  # J = (1 - Acc_val)^2 (Eq. 2); alternative: val_loss
+  lambda: 0.001
+  lambda_sensitivity: [0.0001, 0.001, 0.01, 0.1]
+  learning_rate: 0.0001              # low learning rate for fine-tuning
+  epochs_search: 5
+  epochs_final: 20
+
+differential_evolution:
+  population_size: 10
+  crossover_probability: 0.5
+  scaling_factor: 0.1
+  max_iterations: 100
+  tolerance: 0.0001
+
+online:
+  w: 50                              # fixed configuration used in the experiments
+  thcr_percent: 60.0
+  threshold_rule: ">="               # PAnSa >= ThCr (Algorithm 2)
+  lof_h: 5
+  lof_h_sensitivity: [3, 5, 7, 10, 15]
+  stage2_min_new_event_fraction: 0.60
+  adaptive_rule:                     # Algorithm 3 (proposed selection rule)
+    epsilon: 0.2
+    beta: 0.05
+    tau_aggregation: median
+
+open_set_protocol:
+  realizations: 5
+  samples_per_stream: 500
+  stream_construction: contiguous_segments   # temporal order preserved within segments
+
+reproducibility:
+  runs: 5
+  reference_seeds: [0, 1, 2, 3, 4]
