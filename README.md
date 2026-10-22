@@ -13,22 +13,6 @@ under Severe Domain Shift"*:
 * Open-set metrics (AUROC, OSCR, U-Recall, FUR, EDR, detection delay).
 
 
-## Correspondence with the manuscript
-
-| Manuscript | File |
-|---|---|
-| Fig. 4 (architecture, layer-wise transfer status, definition of N) | `src/models.py` |
-| Sec. 3.5, Eqs. (5)–(8), Algorithm 1 (HAFSE) | `src/hafse.py` |
-| DE (Sec. 3.5, 4.3.1) and exhaustive enumeration (K = 5) | `src/search.py` |
-| Table 8 (sequential, reversed, joint, alternating schemes) | `src/hafse.py::select_structure` |
-| Sec. 4.1.1 (run-level split, train-only normalization, windows) | `src/data.py` |
-| Algorithm 2, detection delay | `src/online_detection.py` |
-| Sec. 4.1.3, Eqs. (9)–(13), Algorithm 3 | `src/adaptive_parameters.py` |
-| Sec. 4.3.2, 5.2.2 (systematic open-set protocol) | `experiments/run_online_osr.py` |
-| Open-set metrics | `src/metrics.py` |
-| λ and h sensitivity | `experiments/lambda_sensitivity.py`, `experiments/lof_h_sensitivity.py` |
-| Seeds (Sec. 4.3.1) | `src/reproducibility.py`, `config/default_config.yaml` |
-
 ## Architecture and transfer
 
 | Layer | Status in the target model |
