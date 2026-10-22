@@ -12,23 +12,12 @@ under Severe Domain Shift"*:
 * **Algorithm 3 — data-driven selection rule for w and ThCr.**
 * Open-set metrics (AUROC, OSCR, U-Recall, FUR, EDR, detection delay).
 
-## Scope
-
-This repository provides a clean implementation of the complete workflow that
-follows the manuscript (architecture, transfer status of every layer, search
-procedure, online decision rule and evaluation protocol). It is not the set of
-original Colab notebooks used during the study. Running the code with the
-reference seeds reproduces the experimental *protocol*, not the exact
-historical runs, whose seeds were randomly generated and not recorded.
-
-The demos run on synthetic data (`src/synthetic.py`); their outputs are not
-manuscript results.
 
 ## Correspondence with the manuscript
 
 | Manuscript | File |
 |---|---|
-| Fig. 4, Table X (architecture, layer-wise transfer status, definition of N) | `src/models.py` |
+| Fig. 4 (architecture, layer-wise transfer status, definition of N) | `src/models.py` |
 | Sec. 3.5, Eqs. (5)–(8), Algorithm 1 (HAFSE) | `src/hafse.py` |
 | DE (Sec. 3.5, 4.3.1) and exhaustive enumeration (K = 5) | `src/search.py` |
 | Table 8 (sequential, reversed, joint, alternating schemes) | `src/hafse.py::select_structure` |
@@ -40,7 +29,7 @@ manuscript results.
 | λ and h sensitivity | `experiments/lambda_sensitivity.py`, `experiments/lof_h_sensitivity.py` |
 | Seeds (Sec. 4.3.1) | `src/reproducibility.py`, `config/default_config.yaml` |
 
-## Architecture and transfer (Table X)
+## Architecture and transfer
 
 | Layer | Status in the target model |
 |---|---|
@@ -82,11 +71,6 @@ python experiments/lof_h_sensitivity.py --synthetic
 To use the study datasets, replace the synthetic loaders with project loaders
 (see `data/README.md`).
 
-## Controlled novel-event update
-
-Candidate novel events are not automatically incorporated into the deployed
-model; they require external characterization and validation before being
-added to the historical database for a later retraining cycle.
 
 ## Version history
 
