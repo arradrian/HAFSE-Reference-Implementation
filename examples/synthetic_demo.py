@@ -1,4 +1,4 @@
-"""Model construction demo: prints the layer-wise transfer table (Table X)
+"""Model construction demo: prints the layer-wise transfer table (Table 1)
 for every value of N, showing that each N yields a distinct configuration."""
 from pathlib import Path
 import sys
@@ -19,7 +19,7 @@ for N in range(1, 6):
     trainable = sum(int(w.shape.num_elements()) for w in target.trainable_weights)
     print(f"N={N}: unfrozen transferred layers = {list(unfrozen_layers(N))}; "
           f"trainable parameters = {trainable}")
-print("\nTable X for N=2, M=3 (TD1-like dimensions):")
+print("\nTable 1 for N=2, M=3 (TD1-like dimensions):")
 for row in transfer_summary(build_target_model(source, T, 6, 8, 2, 3)):
     print(f"  {row['layer']:<22} {str(row['weight_shapes'][0]):<16} params={row['params']:>7}  "
           f"trainable={row['trainable']!s:<5} {row['status']}")

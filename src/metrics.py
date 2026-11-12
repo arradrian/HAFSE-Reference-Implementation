@@ -25,7 +25,11 @@ def false_unknown_rate(y_unknown_true, y_unknown_pred) -> float:
 
 
 def event_detection_rate(event_detected: np.ndarray) -> float:
-    """Fraction of true unknown events that triggered a novel-event decision."""
+    """Fraction of true unknown events that triggered a novel-event decision.
+
+    Event-count variant. The manuscript reports the observation-level EDR
+    computed in ``experiments/run_online_osr.py::evaluate_stream``.
+    """
     arr = np.asarray(event_detected, dtype=bool)
     return float(np.mean(arr)) if arr.size else np.nan
 

@@ -18,7 +18,7 @@ where theta_t are the transferred parameters that are unfrozen for N*.
 
 Besides the sequential N -> M scheme of the manuscript, the reversed (M -> N),
 joint (exhaustive over N x M, 25 configurations for K = 5) and alternating
-schemes evaluated in Sec. 5.1.4 (Table 8) are also provided.
+schemes evaluated in Sec. 5.1.4 (Table 9) are also provided.
 """
 from __future__ import annotations
 
@@ -95,7 +95,7 @@ def _search(candidates, objective, method, seed, de_kwargs):
 def select_structure(evaluate, scheme="sequential", N_space=(1, 2, 3, 4, 5),
                      M_space=(1, 2, 3, 4, 5), M0=0, method="de", seed=0,
                      de_kwargs=None, max_alternations=3):
-    """Select (N*, M*) with one of the schemes compared in Table 8."""
+    """Select (N*, M*) with one of the schemes compared in Table 9."""
     searches = {}
     if scheme == "sequential":          # N -> M (HAFSE)
         rn = _search(N_space, lambda n: evaluate(n, M0), method, seed, de_kwargs)

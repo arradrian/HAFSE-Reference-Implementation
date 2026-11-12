@@ -1,5 +1,5 @@
 # Main configuration (manuscript Sec. 3.5, 4.1, 4.3).
-architecture:            # Fig. 4 / Table X (fixed in src/models.py)
+architecture:            # Fig. 4 / Table 1 (fixed in src/models.py)
   conv_filters: [64, 128, 256]
   conv_kernels: [7, 5, 3]
   lstm_units: [128, 64, 32]
@@ -25,8 +25,8 @@ hafse:
   lambda: 0.001
   lambda_sensitivity: [0.0001, 0.001, 0.01, 0.1]
   learning_rate: 0.0001              # low learning rate for fine-tuning
-  epochs_search: 5
-  epochs_final: 20
+  epochs_search: 5                   # per candidate during the search (not specified in the manuscript)
+  epochs_final: 200                  # final training: 200 (TD1), 500 (TD2); Sec. 4.3.1, Fig. 10
 
 differential_evolution:
   population_size: 10

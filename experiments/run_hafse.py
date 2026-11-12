@@ -66,7 +66,7 @@ def main():
     source = build_source_model(args.T, d_src, cs)
     source.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
     source.fit(to_tf(*S["train"], cs, shuffle=True), validation_data=to_tf(*S["val"], cs),
-               epochs=3 if args.synthetic else 50, verbose=0)
+               epochs=3 if args.synthetic else 200, verbose=0)  # 200 epochs (Sec. 4.3.1, Fig. 5)
 
     de_kwargs = dict(population_size=cfg["differential_evolution"]["population_size"],
                      crossover_probability=cfg["differential_evolution"]["crossover_probability"],
@@ -88,7 +88,7 @@ def main():
     for name, r in res.searches.items():
         print(f"  search {name}: best={r.value}, evaluations={r.n_evaluations}, "
               f"distinct candidates={r.n_unique_candidates}")
-    print("\nLayer-wise transfer summary of the final model (Table X):")
+    print("\nLayer-wise transfer summary of the final model (Table 1):")
     for row in transfer_summary(res.model):
         print(f"  {row['layer']:<22} params={row['params']:>8}  trainable={row['trainable']!s:<5}  {row['status']}")
     total = res.model.count_params()

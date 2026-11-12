@@ -1,6 +1,6 @@
 """CNN-LSTM backbone and HAFSE target-model construction.
 
-The architecture follows Fig. 4 and Table X of the manuscript:
+The architecture follows Fig. 4 and Table 1 of the manuscript:
 
     Conv1D block 1 : Conv1D(64, k=7)  + BN + MaxPooling1D(2) + Dropout(0.2)
     Conv1D block 2 : Conv1D(128, k=5) + BN + MaxPooling1D(2) + Dropout(0.2)
@@ -10,7 +10,7 @@ The architecture follows Fig. 4 and Table X of the manuscript:
     LSTM block 3   : LSTM(32,  return_sequences=False) + BN + Dropout(0.2)
     Head           : Dense(128, ReLU) + BN + Dropout(0.5) + Dense(C, softmax)
 
-Transfer to a target domain (Sec. 4.1.1, Table X):
+Transfer to a target domain (Sec. 4.1.1, Table 1):
 
 * Conv1D block 1 is the target-specific input adapter. Its kernel has shape
   (7, d, 64) and depends on the number of input variables d, so it is always
@@ -136,7 +136,7 @@ def build_target_model(
 
 
 def transfer_summary(model: Model) -> list[dict]:
-    """Layer-wise summary (shapes, parameter counts, status) used for Table X."""
+    """Layer-wise summary (shapes, parameter counts, status) used for Table 1."""
     rows = []
     for layer in model.layers:
         if not layer.weights:

@@ -11,7 +11,9 @@ Protocol
   observations, realizations necessarily share observations, so they are
   randomized realizations rather than independent test sets.
 * Sample-level metrics: AUROC, U-Recall, FUR (and OSCR via src.metrics).
-* Event-level metrics: EDR and detection delay, computed with Algorithm 2
+* Event-level metrics: EDR (observation level: withheld-class observations
+  covered by a new-event decision / all withheld-class observations) and
+  detection delay, computed with Algorithm 2
   (tumbling windows of w observations, decision at window closure), and the
   sample-level latency to the first observation flagged as anomalous.
 
@@ -30,7 +32,7 @@ from sklearn.neighbors import LocalOutlierFactor
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from src.metrics import (auroc_known_unknown, event_detection_rate, false_unknown_rate,
+from src.metrics import (auroc_known_unknown, false_unknown_rate,
                          mean_detection_delay, summarize_runs, unknown_recall)
 from src.online_detection import (delay_bounds, detection_delay, first_flag_latency,
                                   process_online_stream)
@@ -80,13 +82,23 @@ def evaluate_stream(x, y_unknown, events, lof, classifier, w, thcr_percent, h_st
     decisions = process_online_stream(x, lof, classifier, w, thcr_percent, h_stage2=h_stage2)
     delays = [detection_delay(decisions, on, end) for on, end in events]
     latencies = [first_flag_latency(y_pred, on, end) for on, end in events]
+    # Observation-level EDR (Sec. 4.3.2): proportion of withheld-class
+    # observations that fall within windows declared as a new event.
+    ne_mask = np.zeros(len(y_unknown), dtype=bool)
+    for window_end, d in decisions:
+        if d.state == "CANDIDATE_NEW_EVENT":
+            ne_mask[window_end - d.sample_count + 1: window_end + 1] = True
+    unknown = np.asarray(y_unknown) == 1
+    edr = float(np.mean(ne_mask[unknown])) if unknown.any() else np.nan
     return {
         "AUROC": auroc_known_unknown(y_unknown, novelty_score),
         "U_Recall": unknown_recall(y_unknown, y_pred),
         "FUR": false_unknown_rate(y_unknown, y_pred),
-        "EDR": event_detection_rate([d is not None for d in delays]),
+        "EDR": edr,
         "Delay": mean_detection_delay(delays),                 # onset -> NE decision
         "FirstFlagLatency": mean_detection_delay(latencies),   # onset -> first flagged sample
+        # Note: the "Delay" column of Table 13 in the manuscript corresponds to
+        # "FirstFlagLatency" (Detection Delay, Sec. 4.3.2), not to "Delay".
     }
 
 
