@@ -43,7 +43,7 @@ Each value of N = 1, …, 5 yields a distinct set of trainable weights
 
 ```bash
 pip install -r requirements.txt
-python examples/synthetic_demo.py                      # Table X and N configurations
+python examples/synthetic_demo.py                      # Table 1 and N configurations
 python experiments/run_hafse.py --synthetic            # Algorithm 1 end to end
 python experiments/run_hafse.py --synthetic --scheme joint --method exhaustive
 python experiments/run_online_osr.py --synthetic       # Algorithm 2 + open-set protocol
