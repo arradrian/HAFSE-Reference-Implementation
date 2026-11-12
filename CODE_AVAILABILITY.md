@@ -1,8 +1,8 @@
 # Code Availability Statement
 
 An implementation of HAFSE and of the online novelty-detection workflow
-(Algorithms 1–3) is available in this repository (release 2.0.0). It contains
-the model definition corresponding to Fig. 4 and Table X, the HAFSE search and
+(Algorithms 1–3) is available in this repository (release 2.0.1). It contains
+the model definition corresponding to Fig. 4 and Table 1, the HAFSE search and
 training procedure, the data-partitioning pipeline (run-level split,
 train-only normalization and window extraction), the online detection and
 adaptive-parameter modules, the open-set evaluation metrics and the

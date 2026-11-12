@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1
+
+* EDR computed at the observation level, consistent with the manuscript (Sec. 4.3.2).
+* Training epochs aligned with the manuscript (Sec. 4.3.1): source pre-training 200 epochs; final training 200 (TD1) / 500 (TD2).
+* Table references updated to the numbering of the revised manuscript (Table 1: layer-wise transfer; Table 9: optimization schemes); version updated in CITATION.cff and CODE_AVAILABILITY.md.
+
 ## 2.0.0
 
 Alignment of the implementation with the revised manuscript.
@@ -26,7 +32,7 @@ Alignment of the implementation with the revised manuscript.
   observation (`src/online_detection.py`).
 * **Selection criterion**: J = (1 − Acc_val)² (Eq. 2) by default, consistent with the manuscript; 1.0.0 used the validation loss.
 * **Search**: exhaustive enumeration and the reversed/joint/alternating schemes
-  of Table 8; evaluation counts are reported.
+  of Table 9; evaluation counts are reported.
 * **Data pipeline** (`src/data.py`): run-level split before windowing and
   train-only normalization.
 * **Algorithm 3**: documented median aggregation of decorrelation times;
